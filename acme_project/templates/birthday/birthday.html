@@ -1,5 +1,24 @@
+<!-- templates/birthday/birthday.html -->
 {% extends "base.html" %}
 
 {% block content %}
-
+  <form>
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+  </form>
+  <!-- Если в запросе есть параметры... -->
+  {% with data=request.GET %}
+  {% if form.is_valid %}
+    <!-- ...поприветствуем пользователя: -->
+    <h2>Привет, {{ request.GET.first_name }} {{ request.GET.last_name }}</h2>
+    {% if birthday_countdown == 0 %}
+      <!-- ...выводим поздравление: -->
+      С днём рождения!
+    <!-- Если до дня рождения не ноль дней... -->
+    {% else %}
+      <!-- ...сообщаем, сколько осталось ждать: -->
+      Осталось дней до дня рождения: {{ birthday_countdown }}!
+    {% endif %}
+  {% endif %}
+  {% endwith %}
 {% endblock %}
