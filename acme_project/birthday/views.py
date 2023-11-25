@@ -8,7 +8,11 @@ def birthday(request, pk=None):
     instance = None
     if pk is not None:
         instance = get_object_or_404(Birthday, pk=pk)
-    form = BirthdayForm(request.POST or None, instance=instance)
+    form = BirthdayForm(
+        request.POST or None,
+        files=request.FILES or None,
+        instance=instance,
+    )
     context = {'form': form}
     if form.is_valid():
         form.save()
